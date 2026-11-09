@@ -1,10 +1,15 @@
 id: io.github.breadmakesyoufull.bpm2fps
 runtime: org.kde.Platform
-runtime-version: '6.10'
+runtime-version: '6.11'
 sdk: org.kde.Sdk
 base: io.qt.PySide.BaseApp
-base-version: '6.10'
+base-version: '6.11'
 command: bpm2fps
+rename-icon: icon
+build-options:
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
+    - BASEAPP_DISABLE_NUMPY=1
 cleanup-commands:
   - /app/cleanup-BaseApp.sh
 finish-args:
@@ -18,9 +23,9 @@ modules:
   - name: bpm2fps
     buildsystem: simple
     build-commands:
-      - install -D flatpak/io.github.breadmakesyoufull.bpm2fps.metainfo.xml ${FLATPAK_DEST}/share/metainfo/io.github.breadmakesyoufull.bpm2fps.metainfo.xml
-      - install -D flatpak/icon.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.breadmakesyoufull.bpm2fps.svg
-      - install -D flatpak/io.github.breadmakesyoufull.bpm2fps.desktop ${FLATPAK_DEST}/share/applications/io.github.breadmakesyoufull.bpm2fps.desktop
+      - install -D flatpak/${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo/
+      - install -D flatpak/icon.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/
+      - install -D flatpak/${FLATPAK_ID}.desktop -t ${FLATPAK_DEST}/share/applications/
       - pip3 install --prefix=/app --no-deps --no-build-isolation .[gui]
     sources:
       - type: git
